@@ -16,7 +16,7 @@ Workflows are:
 
 ## Workflow Patterns
 Anthropic defines 5 main Workflow Patters:
-- **Prompt Chaining**: Sequential LLM calls where each output feeds the next step
+- **Prompt Chaining**: Sequential LLM calls where each output feeds the next step (steps are defined and no new decision making depending results)
 - **Routing:** a classifier step directs input to the right specialized prompt or sub-agent.
 - **Parallelization**: multiple LLM calls run simultaneously with results collected at a fan-in step.
 - **Orchestrator-Subagent**: a controlling component decomposes a goal and delegates to specialized workers.

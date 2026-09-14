@@ -38,7 +38,7 @@ Result: Report covers only visual arts, completely missing music, writing, and f
 The coordinator's task decomposition was too narrow. All three subtasks focused on visual arts, missing other creative domains.
 #### Solutions
 
-- **Explicit decomposition guidelines**: "Ensure subtasks cover ALL relevant sub-domains"
+- **Explicit decomposition guidelines**: "Ensure subtasks cover ALL relevant sub-domains" ([[Task Decomposition]])
 - **Coverage validation**: After decomposition, validate that subtasks span the full scope
 - **Domain enumeration**: Require the coordinator to enumerate all relevant domains before creating subtasks
 - **Partition by source type**: Assign distinct subtopics or source types to each agent to minimize duplication

@@ -13,11 +13,11 @@ Choosing between fixed and adaptive decomposition is a critical architectural de
 
 ### Fixed Sequential Pipelines (Prompt Chaining)
 
-Best for predictable, multi-aspect workflows:
+Best for predictable, multi-aspect [[Workflow|workflows]]:
 
-- Analyze each file individually, then run a cross-file integration pass
+- Analyze each file individually, then run a cross-file integration pass ([[Parallel Decomposition-Execution| Parallel Execution]])
 - Break reviews into sequential steps with defined inputs/outputs
-- Each step's output feeds the next step's input
+- Each step's output feeds the next step's input ([[Sequential Execution-Decomposition|Sequential Execution]])
 
 Example: Split large code reviews into per-file local analysis passes plus a separate cross-file integration pass to avoid attention dilution.
 #### When to Use Fixed Pipelines
@@ -43,3 +43,29 @@ Example: "Add comprehensive tests to a legacy codebase" -- first map the codebas
 - Early findings change what needs to be investigated next
 - Dependencies between subtasks are discovered during execution
 - The task requires exploration before planning
+## Handoff Message
+A structured payload with task, context, output format, and constraints the receiver needs. It has 4 main components:
+
+ - **Task description**: What the receiver is asked to produce
+ - **Relevant context**: Only the facts the receiver needs
+ - **Output format**: Exactly what structure the result takes
+ - **Constraints**: Boundaries, scope limits, safety restrictions
+ 
+```json
+{
+	"task":"...",
+	"context":[..],
+	"format":{..},
+	"constraints":[..]
+}
+```
+
+It should **Include** what the receiver needs to act without the sender's context: task, relevant facts, output format, and explicit constraints.
+Also it should **Avoid** the full conversation history, internal deliberation, sender state, and redundant context. Other thing to keep in mind is that these schemas shouldn't say which agent runs or continue, they should be agnostic to the agent
+
+>[!important]
+>Each handoff schema should be versioned, they should evolve without breaking anything in the process
+
+The Sender need verification that the receiver got the task complete and everything is good to proceed, this avoids that the sender ends it's process with an invalid output. To achieve that the tasks should have checkpoints, it means save the task state before initiating any handoff. In case of any failure the  task should start from the last **confirmed good checkpoint** NOT just from the last. Finally the Retry should resumes from the checkpoint and not from the beginning.
+
+![[Pasted image 20260913180042.png]]
