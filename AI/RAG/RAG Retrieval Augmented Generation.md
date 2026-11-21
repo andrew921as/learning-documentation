@@ -5,7 +5,7 @@ When you have a massive document and want to ask LLM specific questions about it
 ![[Pasted image 20260819085512.png]]
 
 ## Chunk source text
-To chunk the source text is the most complex step in the RAG process, depending on how do we chunk the text this is how easy will be for the LLM to answer the questions provided, and if it has enough context to answer it.
+To chunk the source text is the most complex step in the RAG process, depending on how do we chunk the text this is how easy will be for the LLM to answer the questions provided, and if it has enough context to answer it. There are several [[Chunk strategies]] that we can use in order to have better performance.
 ![[Pasted image 20260819090217.png]]
 ## How to find the relevant chunk?
 Finding the right chunk is more a search problem - you need to look through all the text chucks and identify the ones that relate to what the user is asking about.
@@ -26,6 +26,15 @@ Each number in an embedding is like a score for some aspect of the text. While w
 
 Example of how we can see each number
 ![[Pasted image 20260819093325.png]]
+
+There are many embedding model providers and each one has their own dimensions:
+- OpenAI:
+	- text-embedding-3-small: 1536 dimensions (default) - Great for most use cases (Can reduce to: 512, 1024 or any size <= 1536)
+	- text-embedding-3-large: 3072 dimensions (default) - Best performance, but costs more (Can reduce to any size <= 3072)
+- Cohere: Strong multilingual support, good for international applications.
+- Voyage AI: Well perform in benchmarks
+- Mistral: Open-source option that's been showing impressive results
+
 For creating these embedding text we can use some AWS services to analyze each chunk.
 ```Python
 def generate_embedding(
@@ -52,12 +61,12 @@ def generate_embedding(
     return response_body["embedding"]
 ```
 
-Then the Array resulted from this embedding will be stored in a vector database ad some calculations should be done in order to find the closest vector value to the user query.
+Then the Array resulted from this embedding will be stored in a [[Vector Database||vector database]] and some calculations should be done in order tjjjjkkkjjjjo find the closest vector value to the user query.
 ![[Pasted image 20260819105114.png]]
 
 ## How to improve the search
 
-We can use a combination of the **semantic search** an a lexical search to find the most relevant chunks. To le lexical search the most common and used is the BM25
+We can use a combination of the **semantic search** an a lexical search to find the most relevant chunks. To let lexical search the most common and used is the BM25
 
 BM25 (Best Match 25) is a popular algorithm for lexical search in RAG pipelines. Here's how it processes a search query:
 
